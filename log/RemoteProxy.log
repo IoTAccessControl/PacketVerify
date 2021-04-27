@@ -1,0 +1,14 @@
+2021/04/27 13:20:56.159646 ======================================
+2021/04/27 13:20:56.160269 RemoteProxy Start to Listen: 127.0.0.1:8083
+2021/04/27 13:20:58.009375 RemoteProxy accept connect: &{{0xc000158100}}
+2021/04/27 13:20:58.009437 RemoteProxy: 127.0.0.1:8083 <-> 127.0.0.1:57826
+2021/04/27 13:20:58.009718 RemoteProxy Connect to: 127.0.0.1:8084
+2021/04/27 13:20:58.009899 RemoteProxy Start forwarding. Counter: 52 
+2021/04/27 13:20:59.167357 RemoteProxy recv from local: 16 12 39326
+2021/04/27 13:20:59.167472 [STATISTIC] [12] RemoteProxy forwarding to server: 12 sign: 39326
+2021/04/27 13:20:59.167872 [STATISTIC] RemoteProxy forwarding to local: 13 sign: 57187
+2021/04/27 13:21:00.648430 RemoteProxy recv from local: 8 4 648
+2021/04/27 13:21:00.648563 [STATISTIC] [4] RemoteProxy forwarding to server: 4 sign: 648
+2021/04/27 13:21:00.648631 RemoteProxy recv from local: 16 12 62865
+2021/04/27 13:21:00.648690 [STATISTIC] [12] RemoteProxy forwarding to server: 12 sign: 62865
+2021/04/27 13:21:00.648854 [STATISTIC] RemoteProxy forwarding to local: 17 sign: 80352

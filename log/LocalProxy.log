@@ -1,0 +1,9 @@
+2021/04/27 13:20:56.159677 ======================================
+2021/04/27 13:20:56.160242 LocalProxy Start to Listen: 127.0.0.1:8082
+2021/04/27 13:20:58.008913 LocalProxy accept connect: &{{0xc0000ea100}}
+2021/04/27 13:20:58.008988 LocalProxy: 127.0.0.1:8082 <-> 127.0.0.1:57825
+2021/04/27 13:20:58.009267 LocalProxy Connect to: 127.0.0.1:8083
+2021/04/27 13:20:58.009422 LocalProxy Start forwarding. Counter: 52 
+2021/04/27 13:20:59.167119 [STATISTIC] [12] LocalProxy forward to server: 16 sign: 39326
+2021/04/27 13:21:00.648403 [STATISTIC] [4] LocalProxy forward to server: 8 sign: 648
+2021/04/27 13:21:00.648519 [STATISTIC] [12] LocalProxy forward to server: 16 sign: 62865
