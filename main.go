@@ -17,7 +17,7 @@ localClient -----> localProxy -----> remoteProxy -----> remoteServer
 
  */
 
-const HOST = "127.0.0.1"
+const HOST = "192.168.122.3"
 
 const (
 	LocalProxy = "LocalProxy"
@@ -26,11 +26,13 @@ const (
 	TCPServer = "TCPServer"
 	UDPClient = "UDPClient"
 	UDPServer = "UDPServer"
+	Stop = "Stop"
 )
 
-var localProxyAddr = HOST + ":8082"
-var remoteProxyAddr = HOST + ":8083"
-var serverAddr = HOST + ":8084"
+//var localProxyAddr = HOST + ":8082"
+var localProxyAddr = "0.0.0.0:8082"
+var remoteProxyAddr = "192.168.122.2:8083"
+var serverAddr = "192.168.122.2:8084"
 
 func main() {
 
@@ -52,11 +54,15 @@ func main() {
 	} else if *mode == TCPClient {
 		netstream.RunTCPClient(localProxyAddr)
 	} else if *mode == UDPServer {
-		netstream.RunUDPServer()
+		netstream.RunUDPServer(serverAddr)
+	} else if *mode == UDPClient {
+		netstream.RunUDPClient(serverAddr)
 	} else if *mode == LocalProxy {
 		proxy.StartLocalProxy(localProxyAddr, remoteProxyAddr)
 	} else if *mode == RemoteProxy {
 		proxy.StartRemoteProxy(remoteProxyAddr, serverAddr)
+	} else if *mode == Stop {
+		os.Exit(0)
 	}
 }
 

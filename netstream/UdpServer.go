@@ -4,23 +4,24 @@ package netstream
 import (
 	"fmt"
 	"net"
-	"strconv"
 	"os"
+	"packet-verify/utils"
 )
 
 // CheckError checks for errors
 func CheckError(err error) {
 	if err != nil {
 		fmt.Println("Error: ", err)
+	//	return
 		os.Exit(0)
 	}
 }
 
-func RunUDPServer() {
+func RunUDPServer(udpAddr string) {
 	/* Lets prepare a address at any address at port 10001*/
-	ServerAddr, err := net.ResolveUDPAddr("udp", ":" + strconv.Itoa(PORT))
+	ServerAddr, err := net.ResolveUDPAddr("udp", udpAddr)
 	CheckError(err)
-	fmt.Println("listening on :" + strconv.Itoa(PORT))
+	fmt.Printf("UDPServer Listen to:" + udpAddr)
 	
 	ch := make(chan *net.UDPConn)
 
@@ -28,25 +29,25 @@ func RunUDPServer() {
 		client, err := net.ListenUDP("udp", ServerAddr)
 		CheckError(err)
 		ch <- client
-	}()
+	//	defer client.Close()
+	
 	for {
 		/* Now listen at selected port */
-	
-		// CheckError(err)
-		// defer client.Close()
 		go handleUdpConn(<-ch)
 	}
+	}()
 }
 
 func handleUdpConn(client *net.UDPConn) {
 	buf := make([]byte, 1024)
 	for {
 		n, addr, err := client.ReadFromUDP(buf)
-		fmt.Printf("received: %s from: %s\n", string(buf[0:n]), addr)
 	
 		if err != nil {
-			fmt.Println("error: ", err)
+			CheckError(err)
+			//fmt.Println("error: ", err)
 		}
+		utils.Statistic("received: %s from: %s\n", string(buf[0:n]), addr)
 		client.WriteTo([]byte("ECHO:"), addr)
 		client.WriteTo(buf[0:n], addr)
 	}

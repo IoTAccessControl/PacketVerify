@@ -7,6 +7,7 @@ import (
 	"packet-verify/netstream"
 	"packet-verify/packet_verify"
 	"packet-verify/utils"
+	"fmt"
 )
 
 func StartRemoteProxy(listenAddr string, remoteAddr string) {
@@ -18,8 +19,8 @@ func StartRemoteProxy(listenAddr string, remoteAddr string) {
 
 	for {
 		local, err := listen.Accept()
-		utils.LogInfo("%s accept connect: %v\n", netstream.PeerTag, local)
-		utils.LogInfo("%s: %v <-> %v\n", netstream.PeerTag, local.LocalAddr(), local.RemoteAddr())
+	//	utils.LogInfo("%s accept connect: %v\n", netstream.PeerTag, local.LocalAddr())
+	//	utils.LogInfo("%s accept connect: %v <-> %v\n", netstream.PeerTag, local.LocalAddr(), local.RemoteAddr())
 		if local == nil {
 			utils.Fatal("accept failed: %v", err)
 		}
@@ -44,7 +45,8 @@ func StartRemoteProxy(listenAddr string, remoteAddr string) {
 			go func() {
 				counter := remoteTokenNegotiation(peer)
 				COUNTER.Init(counter)
-				utils.LogInfo("%s Start forwarding. Counter: %d \n", netstream.PeerTag, counter)
+				utils.LogInfo("%s Start forwarding.\n", netstream.PeerTag)
+				fmt.Printf("Counter: %d\n", counter)
 				remoteForward(peer, COUNTER)
 			}()
 		}
@@ -80,11 +82,13 @@ func remoteForward(peer PeerConn, counter packet_verify.CounterProtocol) {
 				sign := int32(utils.Bytes2Int(pkt[:4]))
 				payload := pkt[4:]
 
-				utils.LogInfo("%s recv from local: %d %d %d\n", netstream.PeerTag, len(pkt), len(payload), sign)
+				fmt.Printf("%s recv from local: %d %d %d\n", netstream.PeerTag, len(pkt), len(payload), sign)
+				//utils.LogInfo("%s recv from local: %d %d %d\n", netstream.PeerTag, len(pkt), len(payload), sign)
 				if cmd == CMD_PKT {
 					if counter.TryRecvCounter(sign, payload) {
 						peer.ForwardToRemote(payload)
-						utils.Statistic("[%d] %s forwarding to server: %d sign: %d\n", len(payload), netstream.PeerTag, len(payload), sign)
+						utils.Statistic("[%d] %s forwarding to server.\n", len(payload), netstream.PeerTag)
+						//utils.Statistic("[%d] %s forward to server: %d sign: %d\n", len(payload), netstream.PeerTag, len(payload), sign)
 					} else {
 						// notify packet loss
 						sign = counter.SendCounterUpdate(payload)
@@ -126,7 +130,8 @@ func remoteForward(peer PeerConn, counter packet_verify.CounterProtocol) {
 				data := append(bys1, pkt...)
 				// forward
 				peer.SendPktLocal(CMD_PKT, data)
-				utils.Statistic("%s forwarding to local: %d sign: %d\n", netstream.PeerTag, len(pkt), sign)
+				//utils.Statistic("%s forwarding to local: %d sign: %d\n", netstream.PeerTag, len(pkt), sign)
+				utils.LogInfo("%s forwarding to local: %d\n", netstream.PeerTag, len(pkt))
 			}
 		}
 

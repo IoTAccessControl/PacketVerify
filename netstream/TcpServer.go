@@ -24,7 +24,7 @@ func RunTCPServer(listenAddr string) {
 	}
 	defer l.Close()
 
-	fmt.Println("TCPServer Listent to: " + listenAddr)
+	utils.LogInfo("TCPServer Listen to: " + listenAddr + "\n")
 	conns := clientConns(l)
 
 	for {
@@ -64,7 +64,7 @@ func handleTcpConn(client net.Conn) {
             }
         }
         dataLen := binary.BigEndian.Uint32(header)
-        utils.Statistic("%s Receive Packet Len: %d\n", PeerTag, dataLen)
+        utils.Statistic("%s Receive Packet [%d]\n", PeerTag, dataLen)
         if uint64(dataLen) > uint64(cap(packet)) {
             packet = make([]byte, 0, dataLen)
         }

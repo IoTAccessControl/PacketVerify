@@ -7,6 +7,7 @@ import (
 	"packet-verify/netstream"
 	"packet-verify/packet_verify"
 	"packet-verify/utils"
+	"fmt"
 )
 
 func StartLocalProxy(listenAddr string, remoteAddr string) {
@@ -18,8 +19,8 @@ func StartLocalProxy(listenAddr string, remoteAddr string) {
 
 	for {
 		local, err := listen.Accept()
-		utils.LogInfo("%s accept connect: %v\n", netstream.PeerTag, local)
-		utils.LogInfo("%s: %v <-> %v\n", netstream.PeerTag, local.LocalAddr(), local.RemoteAddr())
+	//	utils.LogInfo("%s accept connect: %v <-> %v\n", netstream.PeerTag, local.LocalAddr(), local.RemoteAddr())
+	//	fmt.Printf("%s: %v <-> %v\n", netstream.PeerTag, local.LocalAddr(), local.RemoteAddr())
 		if local == nil {
 			utils.Fatal("accept failed: %v", err)
 		}
@@ -28,7 +29,7 @@ func StartLocalProxy(listenAddr string, remoteAddr string) {
 
 		//var ipc policy.IPCLink
 		remote, err := net.Dial("tcp", remoteAddr)
-		utils.LogInfo("%s Connect to: %v\n", netstream.PeerTag, remoteAddr)
+	//	utils.LogInfo("%s Connect to: %v\n", netstream.PeerTag, remoteAddr)
 		if remote == nil {
 			utils.Fatal("%s remote dial failed: %v\n", netstream.PeerTag, err)
 			return
@@ -47,7 +48,8 @@ func StartLocalProxy(listenAddr string, remoteAddr string) {
 			go func() {
 				counter := localTokenNegotiation(peer)
 				COUNTER.Init(counter)
-				utils.LogInfo("%s Start forwarding. Counter: %d \n", netstream.PeerTag, counter)
+				utils.LogInfo("%s Start forwarding.\n", netstream.PeerTag)
+				fmt.Printf("counter: %d\n", counter)
 				localForward(peer, COUNTER)
 			}()
 
@@ -56,7 +58,7 @@ func StartLocalProxy(listenAddr string, remoteAddr string) {
 }
 
 func localTokenNegotiation(peer PeerConn) int32  {
-	var v int32 = 52
+	var v int32 = 0
 	dh := PoorDHMsg{}
 	dh.S = v
 	// TODO diffie hellman
@@ -114,10 +116,11 @@ func localForward(peer PeerConn, counter packet_verify.CounterProtocol) {
 				data := append(bys1, pkt...)
 				// forward
 				peer.SendPktRemote(CMD_PKT, data)
-				utils.Statistic("[%d] %s forward to server: %d sign: %d\n", len(pkt), netstream.PeerTag, len(data), sign)
+				utils.Statistic("[%d] %s forwarding to RemoteProxy.\n", len(pkt), netstream.PeerTag)
+				//utils.Statistic("[%d] %s forwarding: %d sign: %d\n", len(pkt), netstream.PeerTag, len(data), sign)
 			}
 
-		}
+		} 
 
 		done <- 1
 	}()
