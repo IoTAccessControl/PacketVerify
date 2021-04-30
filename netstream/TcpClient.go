@@ -14,7 +14,7 @@ import (
 
 func RunTCPClient(serverAddr string) {
     conn, err := net.Dial("tcp", serverAddr)
-//    utils.LogInfo("TCPClient Connect to: " + serverAddr + "\n")
+    utils.LogInfo("TCPClient Connect to: " + serverAddr + "\n")
     
     if err != nil {
             fmt.Println("ERROR", err)
@@ -23,7 +23,7 @@ func RunTCPClient(serverAddr string) {
 
  //   userInput := bufio.NewReader(os.Stdin)
     response := bufio.NewReader(conn)
-    userInput :="hhh\n"
+    userInput :="1234567890123456789\n"
     //for {
    //     userLine, err := userInput.ReadBytes(byte('\n'))
         userLine := []byte(userInput)

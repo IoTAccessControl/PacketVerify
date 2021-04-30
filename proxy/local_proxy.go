@@ -29,7 +29,7 @@ func StartLocalProxy(listenAddr string, remoteAddr string) {
 
 		//var ipc policy.IPCLink
 		remote, err := net.Dial("tcp", remoteAddr)
-	//	utils.LogInfo("%s Connect to: %v\n", netstream.PeerTag, remoteAddr)
+		utils.LogInfo("%s Connect to: %v\n", netstream.PeerTag, remoteAddr)
 		if remote == nil {
 			utils.Fatal("%s remote dial failed: %v\n", netstream.PeerTag, err)
 			return

@@ -1,6 +1,6 @@
 
-for i in {1..50};do
-    ./packet-verify --mode=TCPClient &
-done
+# for i in {1..200};do
+#     ./packet-verify --mode=TCPClient &
+# done
 
-# ./packet-verify --mode=TCPClient
+./packet-verify --mode=TCPClient
