@@ -1,6 +1,7 @@
-2021/04/30 21:01:06.685794 ======================================
-2021/04/30 21:01:06.685935 RemoteProxy Start to Listen: 192.168.122.2:8083
-2021/04/30 21:01:10.000180 RemoteProxy Connect to: 192.168.122.2:8084
-2021/04/30 21:01:10.000315 RemoteProxy Start forwarding.
-2021/04/30 21:01:10.002194 [STATISTIC] [24] RemoteProxy forwarding to server.
-2021/04/30 21:01:10.002615 RemoteProxy forwarding to local: 25
+2021/04/30 22:15:24.933502 ======================================
+2021/04/30 22:15:24.933730 RemoteProxy Start to Listen: 192.168.122.2:8083
+2021/04/30 22:15:44.952868 RemoteProxy Connect to: 192.168.122.2:8084
+2021/04/30 22:15:44.952970 RemoteProxy Start forwarding.
+2021/04/30 22:15:44.953847 [STATISTIC] [24] RemoteProxy forwarding to server.
+2021/04/30 22:15:44.954131 RemoteProxy forwarding to local: 5
+2021/04/30 22:15:44.954174 RemoteProxy forwarding to local: 20
